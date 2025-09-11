@@ -1,0 +1,540 @@
+/* Insights Component Styles */
+.insights-container {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+}
+
+.insights-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.insights-header h3 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.insights-header p {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Tabs */
+.insights-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: #7f8c8d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.tab-button:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.tab-icon {
+    font-size: 1.1rem;
+}
+
+.tab-label {
+    font-weight: 600;
+}
+
+/* Content */
+.insights-content {
+    min-height: 300px;
+}
+
+/* Insights Tab */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.insight-category {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.insight-category h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.insights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.insight-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.insight-item:last-child {
+    border-bottom: none;
+}
+
+.insight-text {
+    color: #495057;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Opportunities */
+.insight-category.opportunities {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+    border-color: #27ae60;
+}
+
+.opportunities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.opportunity-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #d5f4e6;
+    box-shadow: 0 2px 10px rgba(39, 174, 96, 0.1);
+}
+
+.opportunity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.opportunity-type {
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.opportunity-timeline {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    background: #ecf0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.opportunity-description {
+    color: #2c3e50;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.opportunity-potential {
+    color: #27ae60;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Recommendations Tab */
+.recommendations-grid {
+    display: grid;
+    gap: 25px;
+}
+
+.recommendation-category {
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.recommendation-category h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recommendation-category.urgent {
+    background: linear-gradient(135deg, #ffe8e8 0%, #fff0f0 100%);
+    border-color: #e74c3c;
+}
+
+.recommendation-category.short-term {
+    background: linear-gradient(135deg, #fff3e0 0%, #fff8f0 100%);
+    border-color: #f39c12;
+}
+
+.recommendation-category.cost {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+    border-color: #3498db;
+}
+
+.recommendation-category.revenue {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+    border-color: #27ae60;
+}
+
+.recommendation-category.long-term {
+    background: linear-gradient(135deg, #f3e5f5 0%, #faf0fc 100%);
+    border-color: #9b59b6;
+}
+
+.recommendation-category.strategic {
+    background: linear-gradient(135deg, #f0f4f8 0%, #f8fafc 100%);
+    border-color: #34495e;
+}
+
+.urgency-badge {
+    background: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.recommendations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recommendation-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.recommendation-item::before {
+    content: "💡";
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.recommendation-text {
+    color: #2c3e50;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Risk Tab */
+.risks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.risk-card {
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.risk-card.high {
+    background: linear-gradient(135deg, #ffe8e8 0%, #fff0f0 100%);
+    border-color: #e74c3c;
+}
+
+.risk-card.medium {
+    background: linear-gradient(135deg, #fff3e0 0%, #fff8f0 100%);
+    border-color: #f39c12;
+}
+
+.risk-card.low {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+    border-color: #27ae60;
+}
+
+.risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.risk-level {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.risk-level.high {
+    background: #e74c3c;
+}
+
+.risk-level.medium {
+    background: #f39c12;
+}
+
+.risk-level.low {
+    background: #27ae60;
+}
+
+.risk-type {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.risk-description {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.risk-mitigation {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.risk-mitigation strong {
+    color: #2c3e50;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.risk-mitigation p {
+    color: #495057;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* No Risks */
+.no-risks {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+    border-radius: 10px;
+    border: 2px solid #27ae60;
+}
+
+.no-risks-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.no-risks h4 {
+    color: #27ae60;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.no-risks p {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.risk-mitigation-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.risk-mitigation-section h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Footer */
+.insights-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #ecf0f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.ai-powered-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.ai-icon {
+    font-size: 1.2rem;
+}
+
+.analysis-confidence {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .insights-container {
+        padding: 20px 15px;
+        margin: 20px 0;
+    }
+    
+    .insights-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .insights-tabs {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .insights-grid,
+    .recommendations-grid,
+    .risks-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .opportunities-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .opportunity-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .insights-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .risk-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .insights-container {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .insights-tabs {
+        display: none;
+    }
+    
+    .insights-content {
+        min-height: auto;
+    }
+    
+    .ai-powered-badge {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        box-shadow: none;
+    }
+    
+    .tab-button.active {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        box-shadow: none;
+    }
+}
+
+/* Animation for tabs */
+.insights-content > div {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
