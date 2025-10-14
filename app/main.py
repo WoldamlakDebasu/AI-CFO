@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from services import FinancialAnalysisService
+from app.services import FinancialAnalysisService
 import os
 import logging
 from datetime import datetime

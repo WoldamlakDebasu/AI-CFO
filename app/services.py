@@ -1,5 +1,5 @@
-from models import FinancialData, BenchmarkAnalysis
-from utils import generate_insights, generate_recommendations, create_financial_alerts
+from app.models import FinancialData, BenchmarkAnalysis
+from app.utils import generate_insights, generate_recommendations, create_financial_alerts
 import json
 import pandas as pd
 from datetime import datetime

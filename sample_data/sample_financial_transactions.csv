@@ -1,0 +1,53 @@
+Date,Category,Amount,Income,Expenses,Description
+2024-01-15,Revenue,45000,45000,0,Product Sales Q1
+2024-01-20,Expense,12000,0,12000,Rent Payment
+2024-01-25,Expense,8500,0,8500,Salaries
+2024-01-30,Revenue,32000,32000,0,Service Income
+2024-02-05,Expense,3500,0,3500,Marketing Costs
+2024-02-10,Revenue,52000,52000,0,Product Sales Q1
+2024-02-15,Expense,12000,0,12000,Rent Payment
+2024-02-20,Expense,8500,0,8500,Salaries
+2024-02-25,Expense,4200,0,4200,Utilities
+2024-02-28,Revenue,28000,28000,0,Consulting Services
+2024-03-05,Revenue,61000,61000,0,Product Sales Q1
+2024-03-10,Expense,12000,0,12000,Rent Payment
+2024-03-15,Expense,8500,0,8500,Salaries
+2024-03-20,Expense,5600,0,5600,Office Supplies
+2024-03-25,Revenue,38000,38000,0,Service Income
+2024-03-28,Expense,2800,0,2800,Insurance
+2024-04-02,Revenue,71000,71000,0,Product Sales Q2
+2024-04-08,Expense,12000,0,12000,Rent Payment
+2024-04-12,Expense,9200,0,9200,Salaries (with bonus)
+2024-04-18,Revenue,45000,45000,0,Consulting Services
+2024-04-22,Expense,6500,0,6500,Marketing Campaign
+2024-04-28,Expense,4100,0,4100,Utilities
+2024-05-03,Revenue,78000,78000,0,Product Sales Q2
+2024-05-09,Expense,12000,0,12000,Rent Payment
+2024-05-14,Expense,8500,0,8500,Salaries
+2024-05-20,Revenue,52000,52000,0,Service Income
+2024-05-25,Expense,7200,0,7200,Equipment Purchase
+2024-05-30,Expense,3800,0,3800,Professional Services
+2024-06-04,Revenue,85000,85000,0,Product Sales Q2
+2024-06-10,Expense,12000,0,12000,Rent Payment
+2024-06-15,Expense,8500,0,8500,Salaries
+2024-06-20,Revenue,48000,48000,0,Consulting Services
+2024-06-25,Expense,5400,0,5400,Marketing Costs
+2024-06-28,Expense,4300,0,4300,Utilities
+2024-07-03,Revenue,92000,92000,0,Product Sales Q3
+2024-07-09,Expense,12000,0,12000,Rent Payment
+2024-07-14,Expense,9800,0,9800,Salaries (with bonus)
+2024-07-19,Revenue,56000,56000,0,Service Income
+2024-07-24,Expense,8200,0,8200,Software Licenses
+2024-07-29,Expense,3200,0,3200,Office Maintenance
+2024-08-05,Revenue,98000,98000,0,Product Sales Q3
+2024-08-10,Expense,12000,0,12000,Rent Payment
+2024-08-15,Expense,8500,0,8500,Salaries
+2024-08-20,Revenue,62000,62000,0,Consulting Services
+2024-08-25,Expense,9500,0,9500,Trade Show Expenses
+2024-08-30,Expense,4500,0,4500,Utilities
+2024-09-03,Revenue,105000,105000,0,Product Sales Q3
+2024-09-09,Expense,12000,0,12000,Rent Payment
+2024-09-14,Expense,8500,0,8500,Salaries
+2024-09-19,Revenue,68000,68000,0,Service Income
+2024-09-24,Expense,6800,0,6800,Marketing Campaign
+2024-09-28,Expense,3900,0,3900,Insurance Renewal

@@ -273,17 +273,33 @@ class FinancialData:
 
     def _create_monthly_aggregations(self):
         """Create monthly financial aggregations"""
-        monthly = self.df.set_index('date').resample('M').agg({
-            'amount': 'sum' if 'amount' in self.df.columns else lambda x: 0,
-            'income': 'sum' if 'income' in self.df.columns else lambda x: 0,
-            'expenses': 'sum' if 'expenses' in self.df.columns else lambda x: 0
-        })
+        agg_dict = {}
         
-        if 'income' in self.df.columns and 'expenses' in self.df.columns:
+        if 'amount' in self.df.columns:
+            agg_dict['amount'] = 'sum'
+        if 'income' in self.df.columns:
+            agg_dict['income'] = 'sum'
+        if 'expenses' in self.df.columns:
+            agg_dict['expenses'] = 'sum'
+        
+        if not agg_dict:
+            # Return empty dataframe if no valid columns
+            return pd.DataFrame({'net_cash_flow': []})
+        
+        monthly = self.df.set_index('date').resample('M').agg(agg_dict)
+        
+        # Ensure monthly is a DataFrame
+        if isinstance(monthly, pd.Series):
+            monthly = monthly.to_frame()
+        
+        # Calculate net cash flow
+        if 'income' in monthly.columns and 'expenses' in monthly.columns:
             monthly['net_cash_flow'] = monthly['income'] - monthly['expenses']
+        elif 'amount' in monthly.columns:
+            # Estimate from amount
+            monthly['net_cash_flow'] = monthly['amount']
         else:
-            # Estimate from amount and category
-            monthly['net_cash_flow'] = monthly['amount']  # Simplified
+            monthly['net_cash_flow'] = 0
         
         return monthly.reset_index()
 
