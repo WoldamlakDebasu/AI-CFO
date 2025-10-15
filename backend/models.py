@@ -4,76 +4,150 @@ from sklearn.ensemble import IsolationForest
 import numpy as np
 from datetime import datetime, timedelta
 import warnings
+from gemini_helper import GeminiFinancialAnalyzer
 warnings.filterwarnings('ignore')
 
 class FinancialData:
     """
     Advanced financial data processor with AI-powered insights.
     Supports multiple data formats and provides comprehensive financial analysis.
+    Works with ANY CSV structure using AI-powered column detection.
     """
     def __init__(self, file):
         # Support multiple file formats
-        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
-            self.df = pd.read_excel(file)
-        else:
-            self.df = pd.read_csv(file)
+        try:
+            if file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
+                self.df = pd.read_excel(file)
+            else:
+                self.df = pd.read_csv(file)
+        except Exception as e:
+            raise ValueError(f"Unable to read file: {str(e)}")
         
-        # Advanced data cleaning and preprocessing
+        # Store original columns for reference
+        self.original_columns = list(self.df.columns)
+        
+        # Clean column names
         self.df.columns = self.df.columns.str.strip().str.lower().str.replace(' ', '_')
-        self._standardize_columns()
-        self._ensure_income_expenses()
+        
+        # Use AI to detect column mappings
+        self.column_mapping = GeminiFinancialAnalyzer.detect_column_mapping(
+            self.df, 
+            list(self.df.columns)
+        )
+        
+        print(f"Detected column mapping: {self.column_mapping}")
+        
+        # Apply intelligent column standardization
+        self._apply_column_mapping()
         self._clean_data()
+        self._ensure_income_expenses()
         
-    def _standardize_columns(self):
-        """Standardize column names across different data formats"""
-        column_mapping = {
-            'revenue': ['sales', 'income', 'turnover', 'gross_sales'],
-            'expenses': ['costs', 'expenditure', 'outgoings', 'spending'],
-            'date': ['transaction_date', 'period', 'month', 'time'],
-            'amount': ['value', 'sum', 'total'],
-            'category': ['type', 'description', 'account', 'classification']
-        }
+    def _apply_column_mapping(self):
+        """Apply the AI-detected column mapping to standardize columns."""
+        # Rename columns based on AI detection
+        rename_dict = {}
         
-        for standard_name, variations in column_mapping.items():
-            for col in self.df.columns:
-                if any(var in col for var in variations):
-                    self.df.rename(columns={col: standard_name}, inplace=True)
-                    break
+        if self.column_mapping.get('date_column'):
+            rename_dict[self.column_mapping['date_column']] = 'date'
+        
+        if self.column_mapping.get('income_column'):
+            rename_dict[self.column_mapping['income_column']] = 'income'
+        
+        if self.column_mapping.get('expense_column'):
+            rename_dict[self.column_mapping['expense_column']] = 'expense'
+        
+        if self.column_mapping.get('amount_column'):
+            rename_dict[self.column_mapping['amount_column']] = 'amount'
+        
+        if self.column_mapping.get('category_column'):
+            rename_dict[self.column_mapping['category_column']] = 'category'
+        
+        if self.column_mapping.get('description_column'):
+            rename_dict[self.column_mapping['description_column']] = 'description'
+        
+        # Apply renaming (only rename if not already named)
+        for old_col, new_col in rename_dict.items():
+            if old_col and old_col in self.df.columns and new_col not in self.df.columns:
+                self.df.rename(columns={old_col: new_col}, inplace=True)
 
     def _ensure_income_expenses(self):
         """Ensure income and expenses columns exist, creating them if necessary."""
-        if 'revenue' in self.df.columns and 'income' not in self.df.columns:
-            self.df['income'] = self.df['revenue']
-
-        if 'amount' in self.df.columns and 'category' in self.df.columns:
-            if 'income' not in self.df.columns:
-                income_keywords = ['income', 'revenue', 'sales', 'receivable', 'deposit']
-                income_mask = self.df['category'].str.lower().str.contains('|'.join(income_keywords), na=False)
-                self.df.loc[income_mask, 'income'] = self.df.loc[income_mask, 'amount']
-
-            if 'expenses' not in self.df.columns:
-                expense_keywords = ['expense', 'cost', 'payment', 'bill', 'payable', 'purchase']
-                expense_mask = self.df['category'].str.lower().str.contains('|'.join(expense_keywords), na=False)
-                self.df.loc[expense_mask, 'expenses'] = self.df.loc[expense_mask, 'amount']
+        # Initialize income and expenses columns if they don't exist
+        if 'income' not in self.df.columns:
+            self.df['income'] = 0.0
+        
+        if 'expenses' not in self.df.columns:
+            self.df['expenses'] = 0.0
+        
+        # If we have an amount column and category, split based on category
+        if 'amount' in self.df.columns:
+            # Make a copy of amount to work with
+            self.df['amount'] = pd.to_numeric(self.df['amount'], errors='coerce').fillna(0)
+            
+            if 'category' in self.df.columns:
+                # Try to identify income vs expenses based on category
+                self.df['category_lower'] = self.df['category'].astype(str).str.lower()
+                
+                income_keywords = ['income', 'revenue', 'sales', 'receivable', 'deposit', 'credit', 'earning', 'receipt']
+                expense_keywords = ['expense', 'cost', 'payment', 'bill', 'payable', 'purchase', 'debit', 'spending', 'withdraw']
+                
+                # Create masks for income and expenses
+                income_mask = self.df['category_lower'].str.contains('|'.join(income_keywords), na=False, regex=True)
+                expense_mask = self.df['category_lower'].str.contains('|'.join(expense_keywords), na=False, regex=True)
+                
+                # Assign amounts to income or expenses
+                self.df.loc[income_mask, 'income'] = self.df.loc[income_mask, 'amount'].abs()
+                self.df.loc[expense_mask, 'expenses'] = self.df.loc[expense_mask, 'amount'].abs()
+                
+                # For uncategorized amounts, use sign: positive = income, negative = expense
+                uncategorized_mask = ~(income_mask | expense_mask)
+                self.df.loc[uncategorized_mask & (self.df['amount'] > 0), 'income'] = self.df.loc[uncategorized_mask & (self.df['amount'] > 0), 'amount']
+                self.df.loc[uncategorized_mask & (self.df['amount'] < 0), 'expenses'] = self.df.loc[uncategorized_mask & (self.df['amount'] < 0), 'amount'].abs()
+                
+                self.df.drop('category_lower', axis=1, inplace=True)
+            else:
+                # No category column - use amount sign
+                self.df.loc[self.df['amount'] > 0, 'income'] = self.df.loc[self.df['amount'] > 0, 'amount']
+                self.df.loc[self.df['amount'] < 0, 'expenses'] = self.df.loc[self.df['amount'] < 0, 'amount'].abs()
+        
+        # Handle expense column if named differently
+        if 'expense' in self.df.columns and 'expenses' not in self.df.columns:
+            self.df['expenses'] = self.df['expense']
+        
+        # Ensure numeric types
+        self.df['income'] = pd.to_numeric(self.df['income'], errors='coerce').fillna(0)
+        self.df['expenses'] = pd.to_numeric(self.df['expenses'], errors='coerce').fillna(0)
     
     def _clean_data(self):
         """Advanced data cleaning and validation"""
-        # Convert date column
+        # Convert date column if it exists
         if 'date' in self.df.columns:
             self.df['date'] = pd.to_datetime(self.df['date'], errors='coerce')
-            # Remove rows with invalid dates
-            self.df = self.df.dropna(subset=['date'])
+            # Don't remove rows with invalid dates - just mark them
+            if self.df['date'].isna().all():
+                print("Warning: No valid dates found. Creating synthetic dates.")
+                self.df['date'] = pd.date_range(start='2024-01-01', periods=len(self.df), freq='D')
+        else:
+            # Create synthetic date column if none exists
+            print("Warning: No date column found. Creating synthetic dates.")
+            self.df['date'] = pd.date_range(start='2024-01-01', periods=len(self.df), freq='D')
         
         # Clean numerical columns
-        numerical_cols = ['amount', 'revenue', 'expenses', 'income']
+        numerical_cols = ['amount', 'revenue', 'expenses', 'income', 'expense']
         for col in numerical_cols:
             if col in self.df.columns:
-                # Remove currency symbols and convert to float
-                self.df[col] = self.df[col].astype(str).str.replace(r'[$,£€¥]', '', regex=True)
+                # Remove currency symbols, commas, and convert to float
+                self.df[col] = self.df[col].astype(str).str.replace(r'[$,£€¥\s]', '', regex=True)
+                # Remove parentheses (often used for negative numbers)
+                self.df[col] = self.df[col].str.replace(r'[()]', '', regex=True)
                 self.df[col] = pd.to_numeric(self.df[col], errors='coerce')
         
-        # Remove rows with critical missing data
-        self.df = self.df.dropna(subset=[col for col in numerical_cols if col in self.df.columns])
+        # Fill NaN values with 0 instead of dropping rows
+        for col in numerical_cols:
+            if col in self.df.columns:
+                self.df[col] = self.df[col].fillna(0)
+        
+        print(f"Data cleaned. Shape: {self.df.shape}")
 
     def get_cash_flow(self):
         """

@@ -1,5 +1,5 @@
-from app.models import FinancialData, BenchmarkAnalysis
-from app.utils import generate_insights, generate_recommendations, create_financial_alerts
+from models import FinancialData, BenchmarkAnalysis
+from utils import generate_insights, generate_recommendations, create_financial_alerts
 import json
 import pandas as pd
 from datetime import datetime
@@ -81,15 +81,26 @@ class FinancialAnalysisService:
             return analysis_result
             
         except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Analysis error: {error_details}")
+            
             error_response = {
                 'error': True,
                 'message': f"Analysis failed: {str(e)}",
+                'error_type': type(e).__name__,
                 'suggestions': [
-                    "Ensure your file contains financial data with columns like 'date', 'amount', 'income', 'expenses'",
-                    "Check that your CSV/Excel file is properly formatted",
-                    "Verify that numerical values don't contain special characters",
-                    "Make sure date formats are consistent (YYYY-MM-DD recommended)"
+                    "✓ Your file will be analyzed automatically - we support ANY column structure!",
+                    "✓ Our AI will detect columns containing financial data",
+                    "✓ Supported: dates, amounts, income, expenses, categories",
+                    "✓ If you see this error, please check the file format (CSV or Excel)",
+                    f"✓ Technical details: {str(e)}"
                 ],
+                'supported_formats': {
+                    'file_types': ['CSV (.csv)', 'Excel (.xlsx, .xls)'],
+                    'column_flexibility': 'Any column names will work - AI will detect them',
+                    'example_columns': ['date/amount/category', 'Date/Income/Expenses', 'Time/Revenue/Cost']
+                },
                 'timestamp': datetime.now().isoformat()
             }
             return error_response

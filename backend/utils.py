@@ -1,11 +1,21 @@
 import numpy as np
 from datetime import datetime, timedelta
+from gemini_helper import GeminiFinancialAnalyzer
 
 def generate_insights(cash_flow, profitability, cash_flow_trend, health_score):
     """
     Advanced AI-powered insights generation with contextual analysis.
+    Uses Gemini AI for intelligent insights.
     """
+    # Generate custom AI insights
+    ai_insights = GeminiFinancialAnalyzer.generate_custom_insights(
+        cash_flow, 
+        profitability, 
+        cash_flow_trend
+    )
+    
     insights = {
+        'ai_powered_insights': ai_insights,
         'cash_flow_insights': _analyze_cash_flow(cash_flow),
         'profitability_insights': _analyze_profitability(profitability),
         'trend_insights': _analyze_trends(cash_flow_trend),
